@@ -1,0 +1,2 @@
+shep = {}
+require("src/core")
