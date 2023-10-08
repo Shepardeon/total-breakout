@@ -9,6 +9,8 @@ end
 
 function love.update(dt)
 
+    -- Updates
+    shep.input.keyboard.readState()
 end
 
 function love.draw()
