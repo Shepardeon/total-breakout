@@ -4,7 +4,7 @@ local sqrt = math.sqrt
 
 function shep.math.vector:new(x, y)
     self.x = x or 0
-    self.y = y or x
+    self.y = y or self.x
 end
 
 function shep.math.vector:__tostring()
