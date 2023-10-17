@@ -9,7 +9,10 @@ function Area:update(dt)
     for i = #self.gameObjects, 1, -1 do
         local go = self.gameObjects[i]
         go:update(dt)
-        if go.dead then table.remove(self.gameObjects, i) end
+        if go.dead then
+            table.remove(self.gameObjects, i)
+            go:destroy()
+        end
     end
 end
 

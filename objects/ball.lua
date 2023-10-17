@@ -72,12 +72,12 @@ function Ball:doMoveState(dt)
 
     if cols[1] then
         if cols[1].other == self.player then
-            print(self.player.x,cols[1].touch.x + self.w)
             cols[1].normal.x = -(self.player.x - (cols[1].touch.x + self.w)) / self.player.w
             cols[1].normal.y = -self.dirY
         elseif cols[1].other.class == "Block" then
             cols[1].normal.x = self.dirX
             cols[1].normal.y = -self.dirY
+            cols[1].other.dead = true
         elseif cols[1].other.class == "Wall" then
             cols[1].normal.x = -self.dirX
             cols[1].normal.y = self.dirY
