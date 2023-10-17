@@ -1,2 +1,0 @@
-shep = {}
-require("src/core")
