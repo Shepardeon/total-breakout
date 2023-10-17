@@ -6,6 +6,7 @@ Object  = require("libs.classic")
 Input   = require("libs.boypushy")()
 Timer   = require("libs.humpTimerExtension")
 Camera  = require("libs.hump.camera")
+Signal  = require("libs.hump.signal")
 M = require("libs.moses")
 
 function love.load()
@@ -19,8 +20,15 @@ function love.load()
     love.math.setRandomSeed(os.time())
     love.graphics.setDefaultFilter("nearest", "nearest")
     love.graphics.setLineStyle("rough")
+    love.graphics.setBackgroundColor(Game.backgroundColor)
+
+    Input:bind("q", "right")
+    Input:bind("d", "left")
+    Input:bind("a", "left")
+    Input:bind("space", "start")
 
     CurrRoom = nil
+    GoToRoom("Stage")
 end
 
 function love.update(dt)

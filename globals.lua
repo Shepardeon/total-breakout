@@ -1,7 +1,7 @@
 Game = {
     version = "1.0.0",
-    w = 480,
-    h = 270,
+    w = 960,
+    h = 540,
     sX = 1,
     sy = 1,
     timeScale = 1,

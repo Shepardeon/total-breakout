@@ -18,11 +18,15 @@ function Area:draw()
 end
 
 function Area:addGameObject(gameObject, x, y, opts)
-    local opts = opts or {}
+    opts = opts or {}
     local go = _G[gameObject](self, x or 0, y or 0, opts)
     go.class = gameObject
     table.insert(self.gameObjects, go)
     return go
+end
+
+function Area:addPhysicsWorld(cellSize)
+    self.world = Physics.newWorld(cellSize)
 end
 
 function Area:getGameObject(filterFn)
@@ -60,4 +64,14 @@ function Area:getClosestObject(x, y, radius, objectTypes)
     end)
 
     return objects[1]
+end
+
+function Area:destroy()
+    for i = #self.gameObjects, 1, -1 do
+        local go = self.gameObjects[i]
+        go:destroy()
+        table.remove(self.gameObjects, i)
+    end
+    self.gameObjects = {}
+    self.world = nil
 end

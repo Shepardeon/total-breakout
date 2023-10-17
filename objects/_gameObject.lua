@@ -18,3 +18,16 @@ end
 function GameObject:draw()
 
 end
+
+function GameObject:destroy()
+    self.timer:destroy()
+end
+
+function GameObject:debugDraw()
+    if self.area.world then
+        love.graphics.setColor(1, 0, 0)
+        local x, y, w, h = self.area.world:getRect(self)
+        love.graphics.rectangle("line", x, y, w, h)
+        love.graphics.setColor(Game.defaultColor)
+    end
+end
