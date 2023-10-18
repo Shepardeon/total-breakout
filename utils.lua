@@ -15,6 +15,19 @@ function Distance2(x1, x2, y1, y2)
     return (x1 - x2)*(x1 - x2) + (y1 - y2)*(y1 - y2)
 end
 
+function Length(x, y)
+    return math.sqrt(x*x + y*y)
+end
+
+function Length2(x, y)
+    return x*x + y*y
+end
+
+function Normalize(x, y)
+    local l = Length(x, y)
+    return x/l, y/l
+end
+
 function PrintAll(...)
     local args = { ... }
     for _, v in ipairs(args) do

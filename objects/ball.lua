@@ -71,19 +71,21 @@ function Ball:doMoveState(dt)
     self.x, self.y = resX + self.w, resY + self.w
 
     if cols[1] then
-        if cols[1].other == self.player then
+        local nx = cols[1].normal.x ~= 0 and cols[1].normal.x or self.dirX
+        local ny = cols[1].normal.y ~= 0 and cols[1].normal.y or self.dirY
+
+        if cols[1].other.class == "Player" then
             cols[1].normal.x = -(self.player.x - (cols[1].touch.x + self.w)) / self.player.w
-            cols[1].normal.y = -self.dirY
+            cols[1].normal.y = ny
         elseif cols[1].other.class == "Block" then
-            cols[1].normal.x = self.dirX
-            cols[1].normal.y = -self.dirY
-            cols[1].other.dead = true
+            cols[1].normal.x = nx
+            cols[1].normal.y = ny
+            cols[1].other:kill()
         elseif cols[1].other.class == "Wall" then
-            cols[1].normal.x = -self.dirX
-            cols[1].normal.y = self.dirY
+            cols[1].normal.x = nx
+            cols[1].normal.y = ny
         end
 
-        self.dirX = cols[1].normal.x
-        self.dirY = cols[1].normal.y
+        self.dirX, self.dirY = Normalize(cols[1].normal.x, cols[1].normal.y)
     end
 end
