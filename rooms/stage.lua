@@ -59,8 +59,8 @@ function Stage:draw()
 end
 
 function Stage:destroy()
+    Signal.remove(ballLost)
     self.area:destroy()
     self.area = nil
     self.player = nil
-    Signal.remove(ballLost)
 end

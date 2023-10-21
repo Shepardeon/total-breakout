@@ -48,10 +48,10 @@ function Ball:draw()
 end
 
 function Ball:destroy()
+    Signal.remove(launchBall)
     self.super.destroy(self)
     if self.player then self.player = nil end
     self.area.world:remove(self)
-    Signal.remove(launchBall)
 end
 
 -- BALL STATES
