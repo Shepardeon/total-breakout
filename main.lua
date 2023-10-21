@@ -28,7 +28,7 @@ function love.load()
     Input:bind("space", "start")
     Input:bind("escape", function() love.event.quit() end)
 
-    ResizeWindow(2)
+    --ResizeWindow(2)
 
     CurrRoom = nil
     GoToRoom("Stage")

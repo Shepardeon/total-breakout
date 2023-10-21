@@ -7,9 +7,21 @@ local function loadLevel(area)
     area:addGameObject("Wall", Game.w - 25, 0, { w = 25, h = Game.h })
 
     for x = 1, Game.w/50 do 
-        for y = 1, Game.h/70 do
-            area:addGameObject("Block", 25 + 45 * x, 25 + 25 * y, { w = 35, h = 10, color = { Random(), Random(), Random() } })
+        for y = 1, Game.h/200 do
+            area:addGameObject("Block", 25 + 45 * x, 150 + 25 * y, { w = 35, h = 10, color = { Random(), Random(), Random() } })
         end
+    end
+
+    for x = 1, Game.w/50 do
+        area:addGameObject("Block", 25 + 45 * x, 175 + 25 * Game.h/200, { w = 35, h = 10, color = { 1, 1, 1 }, health = 3 })
+    end
+end
+
+local function ballLost()
+    local balls = CurrRoom.area:getGameObject(function(go) return go.class == "Ball" and not go.dead end)
+    local player = CurrRoom.area:getGameObject(function(go) return go.class == "Player" end)[1]
+    if #balls <= 0 then
+        CurrRoom.area:addGameObject("Ball", 0, 0, { player = player })
     end
 end
 
@@ -21,6 +33,8 @@ function Stage:new()
     loadLevel(self.area)
     self.player = self.area:addGameObject("Player", Game.w/2, Game.h - 25)
     self.area:addGameObject("Ball", 0, 0, { player = self.player })
+
+    Signal.register("ballLost", ballLost)
 end
 
 function Stage:update(dt)
@@ -48,4 +62,5 @@ function Stage:destroy()
     self.area:destroy()
     self.area = nil
     self.player = nil
+    Signal.remove(ballLost)
 end

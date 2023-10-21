@@ -8,6 +8,15 @@ local function ballFilter(item, other)
     end
 end
 
+local function launchBall()
+    local balls = CurrRoom.area:getGameObject(function(go) return go.class == "Ball" end)
+    for _,ball in pairs(balls) do
+        if ball.state ~= "move" then
+            ball.state = "move"
+        end
+    end
+end
+
 function Ball:new(area, x, y, opts)
     self.super.new(self, area, x, y, opts)
 
@@ -24,11 +33,7 @@ function Ball:new(area, x, y, opts)
     self.maxSpeed = 350
     self.area.world:add(self, self.x, self.y, 2*self.w, 2*self.w)
 
-    Signal.register("launchBall", function ()
-        if self.state ~= "move" then
-            self.state = "move"
-        end
-    end)
+    Signal.register("launchBall", launchBall)
 end
 
 function Ball:update(dt)
@@ -46,6 +51,7 @@ function Ball:destroy()
     self.super.destroy(self)
     if self.player then self.player = nil end
     self.area.world:remove(self)
+    Signal.remove(launchBall)
 end
 
 -- BALL STATES
@@ -80,12 +86,17 @@ function Ball:doMoveState(dt)
         elseif cols[1].other.class == "Block" then
             cols[1].normal.x = nx
             cols[1].normal.y = ny
-            cols[1].other:kill()
+            cols[1].other:hit()
         elseif cols[1].other.class == "Wall" then
             cols[1].normal.x = nx
             cols[1].normal.y = ny
         end
 
         self.dirX, self.dirY = Normalize(cols[1].normal.x, cols[1].normal.y)
+    end
+
+    if self.y > Game.h then
+        self.dead = true
+        Signal.emit("ballLost")
     end
 end
