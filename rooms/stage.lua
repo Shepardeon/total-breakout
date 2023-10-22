@@ -19,7 +19,7 @@ end
 
 local function ballLost()
     local balls = CurrRoom.area:getGameObject(function(go) return go.class == "Ball" and not go.dead end)
-    local player = CurrRoom.area:getGameObject(function(go) return go.class == "Player" end)[1]
+    local player = CurrRoom.player
     if #balls <= 0 then
         CurrRoom.area:addGameObject("Ball", 0, 0, { player = player })
     end

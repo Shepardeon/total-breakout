@@ -7,6 +7,7 @@ Input   = require("libs.boypushy")()
 Timer   = require("libs.humpTimerExtension")
 Camera  = require("libs.hump.camera")
 Signal  = require("libs.hump.signal")
+Audio   = require("libs.ripple")
 M = require("libs.moses")
 
 function love.load(args, uArgs)
