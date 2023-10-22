@@ -72,6 +72,8 @@ function Ball:doMoveState(dt)
         self.dirY = -1
     end
 
+    self.area:addGameObject("BallTrailEffect", self.x, self.y, { w = self.w, color = M.clone(self.color) })
+
     local goalX, goalY = (self.x - self.w) + self.maxSpeed * self.dirX * dt, (self.y - self.w) + self.maxSpeed * self.dirY * dt
     local resX, resY, cols = self.area.world:move(self, goalX, goalY, ballFilter)
     self.x, self.y = resX + self.w, resY + self.w
